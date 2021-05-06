@@ -108,120 +108,152 @@
         </div>
     </div>
     
-    <script>       
-        let map
-        let marker
+    <script>
         let dataLocation = new String()
 
-        $(document).ready(function() {
+        $( document ).ready( function() {
             // i'm using python simpleHTTPServer to bypass CORS policy in browser
             // command : python -m http.server
             $.ajax({
                 type: "GET",
                 url: "./js/data.json",
-                success: function(data, status, xhr) {
+                success: function( data, status, xhr ) {
                     let locations = data.singapore
+                    let navItems = $( ".sidenav-item" )
+                    
                     dataLocation = locations
-                    let navItems = $(".sidenav-item")
 
-                    if (locations === undefined || locations.length == 0) {
+                    // check if data is empty or not exist
+                    if ( locations === undefined || locations.length == 0 ) {
                         console.log("No data!")
                     }
 
-                    locations.forEach((element, index) => {
-                        putMarkersOnMap(element)
-                        navItems.eq(index).attr("onclick", "goToMarker("+ index +")")
+                    locations.forEach(( element, index ) => {
+                        putMarkersOnMap( element )
+                        navItems.eq(index).attr( "onclick", "goToMarker("+ index +")" )
                     })
                 },
                 error: function(xhr, status, error) {
-                    console.log(xhr.responseText)
+                    console.log( xhr.responseText )
                 },
                 dataType: "json" 
             })
         })
 
         function initMap() {
-            const center = new google.maps.LatLng(1.286920, 103.854570)
+            const center = new google.maps.LatLng( 1.286920, 103.854570 )
             const mapProp = {
                 center: center,
                 zoom: 15,
             }
 
-            map = new google.maps.Map(document.getElementById("googleMap"), mapProp)
+            map = new google.maps.Map( document.getElementById( "googleMap" ), mapProp )
 
         }
 
         // to put markers on map
-        function putMarkersOnMap(loc) {
-            let position = new google.maps.LatLng(loc.lat, loc.lng)
+        let map
+        let marker
+        let markerOverlay
+
+        function putMarkersOnMap( loc ) {
+            let position = new google.maps.LatLng( loc.lat, loc.lng )
             
             let markerIcon = {
                 url: './img/geo-pin.png',
-                scaledSize: new google.maps.Size(40, 50),
-                origin: new google.maps.Point(2, 0),
-                anchor: new google.maps.Point(19, 50) // reposition custom marker in map to fit the origin marker
+                scaledSize: new google.maps.Size( 40, 50 ),
+                origin: new google.maps.Point( 2, 0 ),
+                anchor: new google.maps.Point( 19, 50 ) // reposition custom marker in map to fit the origin marker
             }
 
             let markerLabel = loc.name            
             let markerLabelClicked = loc.name + "<br>" + loc.address
+
+            // from MarkerWithLabel documentation
+            // http://www.abzz.co/v4/js/markerlabel/docs/examples.html
 
             marker = new MarkerWithLabel({
                 position: position,
                 map: map,
                 draggable: false,
                 icon: markerIcon,
-                labelContent: loc.name,
-                labelAnchor: new google.maps.Point(-4, -46),
+                labelContent: markerLabel,
+                labelAnchor: new google.maps.Point( -4, -46 ),
                 labelClass: "label label-sm",
             })
 
-            marker.addListener('click', function() {
-                map.panTo(position)
-                map.setZoom(17)
+            marker.addListener( 'click', function() {
+                map.panTo( position )
+                map.setZoom( 17 )
+                marker.labelVisible = false
+                addCustomMarker( position, map, markerLabelClicked )
                 
-
-
-                $("#side-map-info").attr("style", "display:block;")
-                $("#image").attr("src", loc.image)
-                $("#title").text(loc.name)
-                $("#desc").html(loc.desc)
-                $("#address").text(loc.address)
-                $("#website").attr("src", loc.website).text(loc.website)
+                $( "#side-map-info" ).attr( "style", "display:block;" )
+                $( "#image" ).attr( "src", loc.image )
+                $( "#title" ).text( loc.name )
+                $( "#desc" ).html( loc.desc )
+                $( "#address" ).text( loc.address )
+                $( "#website" ).attr( "src", loc.website ).text( loc.website )
             });
         }
-        
-        function goToMarker(i) {
-            let position = new google.maps.LatLng(dataLocation[i].lat, dataLocation[i].lng)
-            map.panTo(position)
-            map.setZoom(17)
 
-            $("#side-map-info").attr("style", "display:block;")
-            $("#image").attr("src", dataLocation[i].image)
-            $("#title").text(dataLocation[i].name)
-            $("#desc").html(dataLocation[i].desc)
-            $("#address").text(dataLocation[i].address)
-            $("#website").attr("src", dataLocation[i].website).text(dataLocation[i].website)
+        function addCustomMarker( pos, map, content ) {
+            let newMarkerIcon = {
+                url: './img/geo-pin.png',
+                scaledSize: new google.maps.Size( 120, 150 ),
+                origin: new google.maps.Point( 2, 0 ),
+                anchor: new google.maps.Point( 60, 148 ) // reposition custom marker in map to fit the origin marker
+            }
+
+            new MarkerWithLabel({
+                position: pos,
+                map: map,
+                draggable: false,
+                icon: newMarkerIcon,
+                labelContent: content,
+                labelAnchor: new google.maps.Point( -4, -126 ),
+                labelClass: "label label-lg"
+            })
+        }
+        
+        function goToMarker( i ) {
+            let position = new google.maps.LatLng( dataLocation[ i ].lat, dataLocation[ i ].lng )
+            map.panTo( position )
+            map.setZoom( 17 )
+
+            $( "#side-map-info" ).attr( "style", "display:block;" )
+            $( "#image" ).attr( "src", dataLocation[i].image )
+            $( "#title" ).text(dataLocation[i].name )
+            $( "#desc" ).html(dataLocation[i].desc )
+            $( "#address" ).text( dataLocation[ i ].address )
+            $( "#website" ).attr( "src", dataLocation[ i ].website ).text( dataLocation[ i ].website )
         }
 
         function closeSideInfo() {
-            $("#side-map-info").attr("style", "display:none;")
+            $( "#side-map-info" ).attr( "style", "display:none;" )
         }
         
         // sidenav list controller
-        const dropdown = document.getElementsByClassName("dropdown-btn")
-        const sideNavItem = document.getElementsByClassName("sidenav-item")
+        // https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_active_element
+        // https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav_dropdown
 
-        for (let i = 0; i < dropdown.length; i++) {
-            dropdown[i].addEventListener("click", function() {
+        const dropdown = document.getElementsByClassName( "dropdown-btn" )
+        const sideNavItem = document.getElementsByClassName( "sidenav-item" )
+
+        for ( let i = 0; i < dropdown.length; i++ ) {
+            dropdown[i].addEventListener( "click", function() {
                 let dropdownContent = this.nextElementSibling
-                let activeElement = document.getElementsByClassName("active")
+                let activeElement = document.getElementsByClassName( "active" )
+
                 // set active class to clicked element and remove others non-clicked active class
-                if (activeElement.length > 0) {
-                    activeElement[0].className = activeElement[0].className.replace(" active", "");
+                if ( activeElement.length > 0 ) {
+                    activeElement[0].className = activeElement[0].className.replace( " active", "" );
                 }
+                
                 this.classList.toggle("active")
+                
                 // open and close list from dropdown
-                if (dropdownContent.classList.contains("dropdown-content") && dropdownContent.style.display === "block") {
+                if ( dropdownContent.classList.contains("dropdown-content") && dropdownContent.style.display === "block" ) {
                     dropdownContent.style.display = "none"
                 } else {
                     dropdownContent.style.display = "block"
