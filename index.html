@@ -5,21 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
 
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
     <link rel="stylesheet" type="text/css" href="./css/icon.css" />
     <link rel="stylesheet" type="text/css" href="./css/label.css" />
-    
-    <!-- Import jQuery library -->
+    <script src="./js/map-style.js"></script>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    
-    <!--Use bootstrap to make the application look nice-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-RXf+QSDCUQs5uwRKaDoXt55jygZZm2V++WUZduaU/Ui/9EGp3f/2KZVahFZBKGH0s774sd3HmrhUy+SgOFQLVQ==" crossorigin="anonymous"></script>
- 
-    <!-- Import MarkerWithLabel -->
     <script src="https://unpkg.com/@googlemaps/markerwithlabel/dist/index.min.js"></script>
 
     <!-- Call Google Map JS API -->
@@ -95,7 +91,7 @@
                         <div class="img-container">
                             <img id="image">
                             <div class="close position-absolute top-0 end-0">
-                                <i class="fas fa-times close fa-lg" onclick="sideInfoClose()"></i>
+                                <i class="fas fa-times close fa-lg" onclick="sideMapInfoClose()"></i>
                             </div>
                         </div>
                         <div class="title text-white" id="title">Merlion</div>
@@ -119,7 +115,9 @@
             marker,
             newMarker,
             dataLocation = [],
-            markers = []
+            markers = [],
+            offsetValue = 0,
+            xOffset = 100
 
         $( document ).ready( function() {
             initMap()
@@ -159,6 +157,8 @@
             const mapProp = {
                 center: center,
                 zoom: 15,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                styles: customMapStyle,
             }
             // init map
             map = new google.maps.Map( document.getElementById( "googleMap" ), mapProp )
@@ -247,13 +247,17 @@
             markers[ index ].labelClass = "label-hidden"
             // set new custom big marker as give more information
             addCustomMarker( position, index )
+            // reset xOffset for next panBy
+            xOffset = 100
         }
 
         // side map info open handler
 
         function sideMapInfoOpen( index ) {
             // change center when side map opened
-            map.panBy( 100, 0 )
+            map.panBy( offsetValue + xOffset, 0 )
+            // make panBy to 0, 0 after click
+            xOffset = 0
             // set to side map info
             $( "#side-map-info" ).attr( "style", "display:block;" )
             $( "#image" ).attr( "src", dataLocation[ index ].image )
@@ -264,9 +268,12 @@
             $( "#website" ).attr( "src", dataLocation[ index ].website ).text( dataLocation[ index ].website )
         }
 
-        function sideInfoClose() {
+        function sideMapInfoClose() {
             // normal map center
             map.panBy( -100, 0 )
+            // reset xOffset for next panBy
+            xOffset = 100
+            // close side map info
             $( "#side-map-info" ).attr( "style", "display:none;" )
         }
         
