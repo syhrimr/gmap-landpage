@@ -1,0 +1,236 @@
+<!doctype html>
+<html>
+<head>
+    <title>Singapore Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" type="text/css" href="./css/style.css" />
+    
+    <!-- Import jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    
+    <!--Use bootstrap to make the application look nice-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-RXf+QSDCUQs5uwRKaDoXt55jygZZm2V++WUZduaU/Ui/9EGp3f/2KZVahFZBKGH0s774sd3HmrhUy+SgOFQLVQ==" crossorigin="anonymous"></script>
+ 
+    <script src="https://unpkg.com/@googlemaps/markerwithlabel/dist/index.min.js"></script>
+</head>
+
+<body>
+    <div class="container custom-container">
+        <div class="flex-container">
+            <!-- Dashboard Menu -->
+            <div class="flex-col menu-bar">
+                <div class="card-box flex-col menu-item text-white ts-12 centered-content selected">
+                    <img class="menu-icon" src="./img/db-icon-1.png">
+                    Browser
+                </div>
+                <div class="card-box flex-col menu-item text-secondary ts-12 centered-content">
+                    <img class="menu-icon" src="./img/db-icon-2.png">
+                    Suggest<br>Attractions
+                </div>
+                <div class="card-box flex-col menu-item text-secondary ts-12 centered-content">
+                    <img class="menu-icon" src="./img/db-icon-3.png">
+                    Videos
+                </div>
+                <div class="card-box flex-col menu-item text-secondary ts-12 centered-content">
+                    <img class="menu-icon" src="./img/db-icon-4.png">
+                    Blog
+                </div>
+                <div class="card-box flex-col menu-item text-secondary ts-12 centered-content">
+                    <img class="menu-icon" src="./img/db-icon-5.png">
+                    About
+                </div>
+            </div>
+            <!-- Sidenav Bar Menu -->
+            <div class="flex-col sidenav">
+                <div class="card-box btn-group centered-content">
+                    <button class="btn btn-secondary custom-btn-scd dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                      Filter by favorite
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <li><a class="dropdown-item text-dark" href="#">Most Popular</a></li>
+                    </ul>
+                </div>
+                <a class="sidenav-item ts active">Merlion</a>
+                <button class="dropdown-btn ts sidenav-item dropdown-toggle">Marina Bay Sands</button>
+                <div class="dropdown-container">
+                    <a class="ts" href="#">ArtScience Museum</a>
+                    <a class="ts" href="#">Marina Bay Sands Skypark</a>
+                    <a class="ts" href="#">Double Helix Bridge</a>
+                </div>
+                <button class="dropdown-btn dropdown-toggle sidenav-item ts">Garden by the Bay</button>
+                <button class="dropdown-btn dropdown-toggle sidenav-item ts">China Town</button>  
+                <a class="sidenav-item ts" href="#asian-civilations-museums">Asian Civilitasions Museum</a>   
+                <a class="sidenav-item ts" href="#clarke-quay">Clarke Quay</a>   
+                <a class="sidenav-item ts" href="#fort-canning-park">Fort Canning Park</a>   
+                <a class="sidenav-item ts" href="#singapore-flyer">Singapore Flyer</a>   
+                <a class="sidenav-item ts" href="#orchard-road">Orchard Road</a>   
+            </div>
+            <!-- Map Viewer Side -->
+            <div class="map-container">
+                <!-- Header Map -->
+                <div class="flex-col header-bar">
+                    <h4 class="title">TOP RATED TOURIST ATTRACTIONS IN SINGAPORE</h4>
+                    <div class="icons flex-row top-50 end-0 translate-middle-y">
+                        <img src="img/icon-sprite_01.png">
+                        <img src="img/icon-sprite_02.png">
+                        <img src="img/icon-sprite_03.png">
+                    </div>
+                </div>
+                <!-- Map Body -->
+                <div class="map-body">
+                    <div id="googleMap"></div>
+                    <div class="side-map-info position-absolute bottom-0 end-0" id="side-map-info" style="display: none;">
+                        <div class="img-container">
+                            <img id="image">
+                            <div class="close position-absolute top-0 end-0">
+                                <i class="fas fa-times close fa-lg" onclick="closeSideInfo()"></i>
+                            </div>
+                        </div>
+                        <div class="title text-white" id="title">Merlion</div>
+                        <div class="desc ts" id="desc"></div>
+                        <div class="address ts">
+                            <i class="fas fa-map-marker-alt fa-fw" style="color: #72cdd2"></i>
+                            <p id="address">Jalan Raya</p>
+                        </div>
+                        <div class="address ts">
+                            <i class="fas fa-globe-asia fa-fw" style="color: #92d72e"></i>
+                            <a id="website" href="#" class="ts ellipsis" style="color: #cccccc;">https://www.google.com</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let dropdown = document.getElementsByClassName("dropdown-btn")
+        let sideNavItem = document.getElementsByClassName("sidenav-item")
+        
+        let map
+        let marker
+
+        $(document).ready(function() {
+            // I'm using python simpleHTTPServer to bypass CORS policy in Chrome
+            // command : python -m http.server
+            // Fetch data.json data
+            $.ajax({
+                type: "GET",
+                url: "./js/data.json",
+                success: function(data, status, xhr) {
+                    let locations = data.singapore
+                    let navItems = $(".sidenav-item")
+
+                    if (locations === undefined || locations.length == 0) {
+                        console.log("No data!")
+                    }
+
+                    locations.forEach((element, index) => {
+                        putMarkersOnMap(element)
+                        navItems.eq(index).attr("onclick", "goToMarker("+
+                            element.lat +","+
+                            element.lng +")")
+                    })
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr.responseText)
+                },
+                dataType: "json" 
+            })
+        })
+
+        function initMap() {
+            let center = new google.maps.LatLng(1.286920, 103.854570)
+            let mapProp = {
+                center: center,
+                zoom: 15,
+            }
+            map = new google.maps.Map(document.getElementById("googleMap"), mapProp)
+        }
+        // google.maps.event.addDomListener(window, 'load', initMap);
+
+        // To put markers on map
+        function putMarkersOnMap(loc) {
+            let position = new google.maps.LatLng(loc.lat, loc.lng)
+
+            let left = loc.left
+            let top = loc.top
+            
+            let markerIcon = {
+                url: './img/geo-pin.png', // http://image.flaticon.com/icons/svg/252/252025.svg
+                scaledSize: new google.maps.Size(40, 50),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(40, 33),
+                labelOrigin: new google.maps.Point(48, 100) // left, top
+            }
+
+            let markerLabel = loc.name            
+
+            marker = new MarkerWithLabel({
+                position: position,
+                map: map,
+                draggable: false,
+                icon: markerIcon,
+                labelContent: loc.name,
+                // labelAnchor: new google.maps.Point(loc.left, loc.top),
+                labelClass: "label",
+            })
+
+            marker.addListener('click', function() {
+                map.panTo(position)
+                map.setZoom(17)
+
+                $("#side-map-info").attr("style", "display:block;")
+                $("#image").attr("src", loc.image)
+                $("#title").text(loc.name)
+                $("#desc").html(loc.desc)
+                $("#address").text(loc.address)
+                $("#website").attr("src", loc.website).text(loc.website)
+            });
+        }
+        
+        function goToMarker(lat, lng) {
+            let position = new google.maps.LatLng(lat, lng)
+            map.panTo(position)
+            map.setZoom(17)
+        }
+
+        function closeSideInfo() {
+            $("#side-map-info").attr("style", "display:none;")
+        }
+        
+        // Sidenav button shows dropdown list
+        for (let i = 0; i < dropdown.length; i++) {
+            dropdown[i].addEventListener("click", function() {
+                this.classList.toggle("active")
+                var dropdownContent = this.nextElementSibling
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none"
+                } else {
+                    dropdownContent.style.display = "block"
+                }
+            });
+        }
+
+        // Sidenav button add class active when clicked
+        for (let i = 0; i < sideNavItem.length; i++) {
+            sideNavItem[i].addEventListener("click", function() {
+                // var current = document.getElementsByClassName("active");
+                // // console.log(current)
+                // if (current.length > 0) { 
+                //     current[0].className = current[0].className.replace(" active", "");
+                // }
+                // this.classList.toggle("active")
+            })
+        }
+    </script>
+
+    <!-- Call Google Map JS API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhxal3J4QPdqzueExcY1fVz25q9MByoH0&callback=initMap"></script>
+</body>
+</html>

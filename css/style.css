@@ -1,0 +1,294 @@
+html, body {
+    font-family: "Myriad-Pro";
+    src: url(http://www.anaveer.in/honda/font/MYRIADPRO-REGULAR.OTF) format("truetype");
+    width: 100%;
+    height: 100%;
+}
+
+* {   
+    margin: 0;
+    padding: 0;
+}
+
+.container.custom-container {
+    padding: 0;
+    margin: 0;
+    max-width: 100vh;
+}
+
+.flex-container {
+    width: 100vw;
+    height: 100vh;
+    min-height: 100vh;
+    display: flex;
+    flex-wrap: nowrap;
+    background-color: black;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.card-box {
+    height: 100px;
+    font-weight: 600;
+    border-bottom: 1px solid rgb(29, 29, 29, 0.25);
+}
+
+.centered-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-bar {
+    width: 150px;
+    height: 100%;
+    background-color: #313541;
+}
+
+.menu-item {
+    text-align: center;
+}
+
+.menu-bar .selected {
+    background-color: #72cdd2;
+}
+
+.menu-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.map-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.header-bar {
+    flex-grow: 0;
+    width: 100%;
+    height: 100px;
+    background-color: #F4F7FA;
+    position: relative;
+}
+
+.header-bar h4 {
+    margin: 0;
+    width: 70%;
+    position: absolute;
+}
+
+.header-bar .icons {
+    z-index: 1;
+    height: 100%;
+    width: auto;
+    position: absolute;
+    padding: 25px 20px 0 0;
+}
+
+.icons img {
+    height: 36px;
+    width: 36px;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 90px;
+    padding-left: 30px;
+    height: 100%;
+}
+
+.map-body {
+    flex-grow: 1;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+}
+
+#googleMap {
+    flex-grow: 1;
+    height: 100%;
+    width: 100%;
+}
+
+.side-map-info {
+    flex-grow: 0;
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: 100%;
+    background-color:#313541;
+    box-shadow: -10px 0 10px -10px rgba(31, 73, 125, 0.8)
+
+}
+
+.side-map-info img {
+    width: 100%;
+    height: 150px;
+    background-color: #555;
+}
+
+.side-map-info .img-container {
+    position: relative;
+    display: flex;
+    flex: row;
+}
+
+.img-container .close {
+    z-index: 9;
+    margin-top: 5px;
+    margin-right: 5px;
+    color: white;
+}
+
+.side-map-info .title {
+    height: 50px;
+    padding: 15px 0 20px 30px;
+    font-size: 16px;
+    line-height: normal;
+    background-color: #72cdd2;
+}
+
+.side-map-info .desc {
+    padding: 20px 10px 0 30px;
+    word-wrap: break-word;
+    color: #cccccc;
+}
+
+.side-map-info .address {
+    display: flex;
+    flex-direction: row;
+    padding-left: 30px;
+    color: #cccccc;
+}
+
+.address svg {
+    margin-right: 10px;
+}
+
+.btn-secondary.custom-btn-scd {
+    text-align: left;
+    background-color: transparent;
+    color: rgb(126, 126, 126);
+    border-color: rgb(34, 37, 47, 0.42);
+    border-right: transparent;
+}
+
+.ts-12 {
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.ts {
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.list-item {
+    padding: 5px 0 5px 30px;
+    margin: 5px 0 5px 0;
+    height: 100%;
+}
+
+.list-item-child {
+    padding: 5px 0 0 10px;
+}
+
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.sidenav {
+    z-index: 1;
+    width: 350px;
+    height: 100%;
+    padding: 0 20px 0 20px;
+    background-color: #282C37;
+    box-shadow: 10px 0 10px -10px rgba(31, 73, 125, 0.8);
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+}
+  
+.sidenav a, .dropdown-btn {
+    padding: 10px 0 10px 15px;
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+    display: block;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+    border-bottom: 1px solid #1a1d2443;
+}
+  
+.sidenav a:hover, .dropdown-btn:hover {
+    color: #92d72e;
+}
+  
+.active {
+    background-color: #1a1d24;
+    color: #92d72e;
+}
+
+.dropdown-container {
+    display: none;
+    padding-left: 8px;
+}
+
+.dropdown-container > a {
+    color: rgb(107, 107, 107);
+    font-weight: initial;
+}
+ 
+.fa-caret-down {
+    float: right;
+    padding-right: 8px;
+}
+
+/* Custom icon */
+.icon1 {
+    height: 52px;
+    width: 52px;
+    background-image: url("./img/icon-sprite.png") 0 0;
+}
+
+.icon2 {
+    height: 52px;
+    width: 52px;
+    background-image: url("./img/icon-sprite.png") 0 -53px;
+}
+
+.icon3 {
+    height: 52px;
+    width: 52px;
+    background-image: url("./img/icon-sprite.png") 0 -106px;
+}
+
+.label {
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: "Myriad-Pro";
+    src: url(http://www.anaveer.in/honda/font/MYRIADPRO-REGULAR.OTF) format("truetype");
+    text-align: left;
+    white-space: nowrap;
+    background-color: rgb(49, 191, 77);font-size: 12px;
+}
