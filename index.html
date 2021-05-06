@@ -56,20 +56,20 @@
                       <li><a class="dropdown-item text-dark" href="#">Most Popular</a></li>
                     </ul>
                 </div>
-                <a class="sidenav-item ts active">Merlion</a>
-                <button class="dropdown-btn ts sidenav-item dropdown-toggle">Marina Bay Sands</button>
-                <div class="dropdown-container">
+                <button class="dropdown-btn sidenav-item ts">Merlion</button>
+                <button class="dropdown-btn dropdown-toggle sidenav-item ts">Marina Bay Sands</button>
+                <div class="dropdown-container dropdown-content">
                     <a class="ts" href="#">ArtScience Museum</a>
                     <a class="ts" href="#">Marina Bay Sands Skypark</a>
                     <a class="ts" href="#">Double Helix Bridge</a>
                 </div>
                 <button class="dropdown-btn dropdown-toggle sidenav-item ts">Garden by the Bay</button>
                 <button class="dropdown-btn dropdown-toggle sidenav-item ts">China Town</button>  
-                <a class="sidenav-item ts" href="#asian-civilations-museums">Asian Civilitasions Museum</a>   
-                <a class="sidenav-item ts" href="#clarke-quay">Clarke Quay</a>   
-                <a class="sidenav-item ts" href="#fort-canning-park">Fort Canning Park</a>   
-                <a class="sidenav-item ts" href="#singapore-flyer">Singapore Flyer</a>   
-                <a class="sidenav-item ts" href="#orchard-road">Orchard Road</a>   
+                <button class="dropdown-btn sidenav-item ts" href="#asian-civilations-museums">Asian Civilitasions Museum</button>
+                <button class="dropdown-btn sidenav-item ts" href="#clarke-quay">Clarke Quay</button>
+                <button class="dropdown-btn sidenav-item ts" href="#fort-canning-park">Fort Canning Park</button>
+                <button class="dropdown-btn sidenav-item ts" href="#singapore-flyer">Singapore Flyer</button>
+                <button class="dropdown-btn sidenav-item ts" href="#orchard-road">Orchard Road</button>
             </div>
             <!-- Map Viewer Side -->
             <div class="map-container">
@@ -108,22 +108,20 @@
         </div>
     </div>
     
-    <script>
-        let dropdown = document.getElementsByClassName("dropdown-btn")
-        let sideNavItem = document.getElementsByClassName("sidenav-item")
-        
+    <script>       
         let map
         let marker
+        let dataLocation = new String()
 
         $(document).ready(function() {
-            // I'm using python simpleHTTPServer to bypass CORS policy in Chrome
+            // i'm using python simpleHTTPServer to bypass CORS policy in browser
             // command : python -m http.server
-            // Fetch data.json data
             $.ajax({
                 type: "GET",
                 url: "./js/data.json",
                 success: function(data, status, xhr) {
                     let locations = data.singapore
+                    dataLocation = locations
                     let navItems = $(".sidenav-item")
 
                     if (locations === undefined || locations.length == 0) {
@@ -132,9 +130,7 @@
 
                     locations.forEach((element, index) => {
                         putMarkersOnMap(element)
-                        navItems.eq(index).attr("onclick", "goToMarker("+
-                            element.lat +","+
-                            element.lng +")")
+                        navItems.eq(index).attr("onclick", "goToMarker("+ index +")")
                     })
                 },
                 error: function(xhr, status, error) {
@@ -145,31 +141,29 @@
         })
 
         function initMap() {
-            let center = new google.maps.LatLng(1.286920, 103.854570)
-            let mapProp = {
+            const center = new google.maps.LatLng(1.286920, 103.854570)
+            const mapProp = {
                 center: center,
                 zoom: 15,
             }
-            map = new google.maps.Map(document.getElementById("googleMap"), mapProp)
-        }
-        // google.maps.event.addDomListener(window, 'load', initMap);
 
-        // To put markers on map
+            map = new google.maps.Map(document.getElementById("googleMap"), mapProp)
+
+        }
+
+        // to put markers on map
         function putMarkersOnMap(loc) {
             let position = new google.maps.LatLng(loc.lat, loc.lng)
-
-            let left = loc.left
-            let top = loc.top
             
             let markerIcon = {
-                url: './img/geo-pin.png', // http://image.flaticon.com/icons/svg/252/252025.svg
+                url: './img/geo-pin.png',
                 scaledSize: new google.maps.Size(40, 50),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(40, 33),
-                labelOrigin: new google.maps.Point(48, 100) // left, top
+                origin: new google.maps.Point(2, 0),
+                anchor: new google.maps.Point(19, 50) // reposition custom marker in map to fit the origin marker
             }
 
             let markerLabel = loc.name            
+            let markerLabelClicked = loc.name + "<br>" + loc.address
 
             marker = new MarkerWithLabel({
                 position: position,
@@ -177,13 +171,15 @@
                 draggable: false,
                 icon: markerIcon,
                 labelContent: loc.name,
-                // labelAnchor: new google.maps.Point(loc.left, loc.top),
-                labelClass: "label",
+                labelAnchor: new google.maps.Point(-4, -46),
+                labelClass: "label label-sm",
             })
 
             marker.addListener('click', function() {
                 map.panTo(position)
                 map.setZoom(17)
+                
+
 
                 $("#side-map-info").attr("style", "display:block;")
                 $("#image").attr("src", loc.image)
@@ -194,39 +190,43 @@
             });
         }
         
-        function goToMarker(lat, lng) {
-            let position = new google.maps.LatLng(lat, lng)
+        function goToMarker(i) {
+            let position = new google.maps.LatLng(dataLocation[i].lat, dataLocation[i].lng)
             map.panTo(position)
             map.setZoom(17)
+
+            $("#side-map-info").attr("style", "display:block;")
+            $("#image").attr("src", dataLocation[i].image)
+            $("#title").text(dataLocation[i].name)
+            $("#desc").html(dataLocation[i].desc)
+            $("#address").text(dataLocation[i].address)
+            $("#website").attr("src", dataLocation[i].website).text(dataLocation[i].website)
         }
 
         function closeSideInfo() {
             $("#side-map-info").attr("style", "display:none;")
         }
         
-        // Sidenav button shows dropdown list
+        // sidenav list controller
+        const dropdown = document.getElementsByClassName("dropdown-btn")
+        const sideNavItem = document.getElementsByClassName("sidenav-item")
+
         for (let i = 0; i < dropdown.length; i++) {
             dropdown[i].addEventListener("click", function() {
+                let dropdownContent = this.nextElementSibling
+                let activeElement = document.getElementsByClassName("active")
+                // set active class to clicked element and remove others non-clicked active class
+                if (activeElement.length > 0) {
+                    activeElement[0].className = activeElement[0].className.replace(" active", "");
+                }
                 this.classList.toggle("active")
-                var dropdownContent = this.nextElementSibling
-                if (dropdownContent.style.display === "block") {
+                // open and close list from dropdown
+                if (dropdownContent.classList.contains("dropdown-content") && dropdownContent.style.display === "block") {
                     dropdownContent.style.display = "none"
                 } else {
                     dropdownContent.style.display = "block"
                 }
             });
-        }
-
-        // Sidenav button add class active when clicked
-        for (let i = 0; i < sideNavItem.length; i++) {
-            sideNavItem[i].addEventListener("click", function() {
-                // var current = document.getElementsByClassName("active");
-                // // console.log(current)
-                // if (current.length > 0) { 
-                //     current[0].className = current[0].className.replace(" active", "");
-                // }
-                // this.classList.toggle("active")
-            })
         }
     </script>
 

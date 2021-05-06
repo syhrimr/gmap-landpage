@@ -257,6 +257,16 @@ html, body {
     color: rgb(107, 107, 107);
     font-weight: initial;
 }
+
+.dropdown-toggle {
+    position: relative;
+  }
+  
+  .dropdown-toggle::after {
+    position: absolute;
+    right: 20px;
+    bottom: 45%;
+  }
  
 .fa-caret-down {
     float: right;
@@ -284,11 +294,14 @@ html, body {
 
 .label {
     color: white;
-    font-size: 16px;
     font-weight: bold;
-    font-family: "Myriad-Pro";
-    src: url(http://www.anaveer.in/honda/font/MYRIADPRO-REGULAR.OTF) format("truetype");
     text-align: left;
     white-space: nowrap;
-    background-color: rgb(49, 191, 77);font-size: 12px;
+    background-color: rgba(146,215,46,255);
+}
+
+.label-sm {
+    height: 25px;
+    padding: 7px 15px 0 10px;
+    font-size: 12px;
 }

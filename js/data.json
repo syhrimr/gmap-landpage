@@ -7,9 +7,7 @@
             "image" : "./img/merlion.jpg",
             "address" : "10 Bayfont Avenue, Singapore",
             "website" : "https://www.visitsingapore.com/",
-            "desc" : "<p>The Merlion is the national personficitaion of Singapore</p><p>Its name combines &quot;mer&quot; meaning the sea and &quot;lion&quot;. The fish body represents Singapore's origin as a fishing village when it was called Temasek, which means &quot;sea town&quot; in Javanese. The lion head represents Singapore's original name&#8212;Singapura&#8212;meaning &quot;lion city&quot; or &quot;kota singa&quot;</p>",
-            "top" : "20",
-            "left" : "48"
+            "desc" : "<p>The Merlion is the national personficitaion of Singapore</p><p>Its name combines &quot;mer&quot; meaning the sea and &quot;lion&quot;. The fish body represents Singapore's origin as a fishing village when it was called Temasek, which means &quot;sea town&quot; in Javanese. The lion head represents Singapore's original name&#8212;Singapura&#8212;meaning &quot;lion city&quot; or &quot;kota singa&quot;</p>"
         },
         {
             "name" : "Marina Bay Sands",
@@ -18,9 +16,7 @@
             "image" : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Marina_Bay_Sands_in_the_evening_-_20101120.jpg/800px-Marina_Bay_Sands_in_the_evening_-_20101120.jpg",
             "address" : "Down Town Core, Singapore",
             "website" : "https://id.marinabaysands.com/company-information/about.html",
-            "desc" : "<p>Marina Bay Sands (MBS) is an integrated resort (IR) with a hotel, casino, retail mall, as well as convention facilities and entertainment venues including theatres, nightclubs and a museum. Sitting on a 570,000 sq m waterfront site at Marina Bay, MBS is operated by Las Vegas Sands (LVS) Corp.</p>",
-            "top" : "20",
-            "left" : "96"
+            "desc" : "<p>Marina Bay Sands (MBS) is an integrated resort (IR) with a hotel, casino, retail mall, as well as convention facilities and entertainment venues including theatres, nightclubs and a museum. Sitting on a 570,000 sq m waterfront site at Marina Bay, MBS is operated by Las Vegas Sands (LVS) Corp.</p>"
         },
         {
             "name" : "Gardens by The Bay",
@@ -29,9 +25,7 @@
             "image" : "https://upload.wikimedia.org/wikipedia/commons/0/0d/Marina_Bay_Sands_from_Gardens_By_The_Bay.jpg",
             "address" : "Down Town Core, Singapore",
             "website" : "http://www.gardensbythebay.com.sg/en/the-gardens/our-story/introduction.html#:~:text=A%20national%20garden%20and%20premier,of%20the%20world%2C%20ranging%20from",
-            "desc" : "<p>A national garden and premier horticultural attraction for local and international visitors, Gardens by the Bay is a showpiece of horticulture and garden artistry that presents the plant kingdom in a whole new way, entertaining while educating visitors with plants seldom seen in this part of the world, ranging from species in cool, temperate climates to tropical forests and habitats.</p>",
-            "top" : "20",
-            "left" : "48"
+            "desc" : "<p>A national garden and premier horticultural attraction for local and international visitors, Gardens by the Bay is a showpiece of horticulture and garden artistry that presents the plant kingdom in a whole new way, entertaining while educating visitors with plants seldom seen in this part of the world, ranging from species in cool, temperate climates to tropical forests and habitats.</p>"
         },
         {
             "name" : "Chinatown",
@@ -40,9 +34,7 @@
             "image" : "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Pagoda_Street%2C_Dec_05.JPG/800px-Pagoda_Street%2C_Dec_05.JPG",
             "address" : "Central Area, Singapore",
             "website" : "https://www.visitsingapore.com/id_id/see-do-singapore/places-to-see/chinatown/",
-            "desc" : "<p>Chinatown is an estate located largely in the Outram area in the Central Region of Singapore. In his 1822 master Town Plan, Sir Stamford Raffles allocated the whole area west of the Singapore River for a Chinese settlement known as the Chinese Campong (kampong in Malay means “village”), envisaging that the Chinese would form the bulk of future town dwellers.</p>",
-            "top" : "20",
-            "left" : "48"
+            "desc" : "<p>Chinatown is an estate located largely in the Outram area in the Central Region of Singapore. In his 1822 master Town Plan, Sir Stamford Raffles allocated the whole area west of the Singapore River for a Chinese settlement known as the Chinese Campong (kampong in Malay means “village”), envisaging that the Chinese would form the bulk of future town dwellers.</p>"
         },
         {
             "name" : "Asian Civilisations Museum",
@@ -51,9 +43,7 @@
             "image" : "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Asian_civilisations_museums_singapore.jpg/800px-Asian_civilisations_museums_singapore.jpg",
             "address" : "Old Parliament Ln, Singapore",
             "website" : "http://www.acm.org.sg/",
-            "desc" : "<p>The Asian Civilisations Museum (ACM) is an institution which forms a part of the four museums in Singapore, the other three being the Peranakan Museum at Old Tao Nan School, the National Museum of Singapore and the Singapore Art Museum.</p>",
-            "top" : "20",
-            "left" : "48"
+            "desc" : "<p>The Asian Civilisations Museum (ACM) is an institution which forms a part of the four museums in Singapore, the other three being the Peranakan Museum at Old Tao Nan School, the National Museum of Singapore and the Singapore Art Museum.</p>"
         },
         {
             "name" : "Clarke Quay",
@@ -62,9 +52,7 @@
             "image" : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Clarke_Quay_9%2C_Feb_06.JPG/800px-Clarke_Quay_9%2C_Feb_06.JPG",
             "address" : "Clarke Quay, Singapore",
             "website" : "https://www.capitaland.com/sg/malls/clarkequay/en.html",
-            "desc" : "<p>Clarke Quay is also the name of a road along the quay, part of which has since been converted into a pedestrian mall. Clarke Street, located next to Clarke Quay, was officially named in 1896, and was originally two streets known simply as East Street and West Street in north Kampong Malacca. Similar to Clarke Quay, Clarke Street has since been converted into a pedestrian mall.</p>",
-            "top" : "20",
-            "left" : "48"
+            "desc" : "<p>Clarke Quay is also the name of a road along the quay, part of which has since been converted into a pedestrian mall. Clarke Street, located next to Clarke Quay, was officially named in 1896, and was originally two streets known simply as East Street and West Street in north Kampong Malacca. Similar to Clarke Quay, Clarke Street has since been converted into a pedestrian mall.</p>"
         },
         {
             "name" : "Fort Canning Park",
@@ -73,20 +61,16 @@
             "image" : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Fort_Canning_Park_sign%2C_Singapore_-_20110506.jpg/800px-Fort_Canning_Park_sign%2C_Singapore_-_20110506.jpg",
             "address" : "Museum Planning Area, Singapore",
             "website" : "https://www.visitsingapore.com/id_id/see-do-singapore/nature-wildlife/parks-gardens/fort-canning-park/",
-            "desc" : "<p>Fort Canning Park, an iconic hilltop landmark has witnessed many of Singapore's historical milestones. The hill once sited the palaces of 14th century Kings and served as the Headquarters of the Far East Command Centre and British Army Barracks.</p>",
-            "top" : "20",
-            "left" : "48"
+            "desc" : "<p>Fort Canning Park, an iconic hilltop landmark has witnessed many of Singapore's historical milestones. The hill once sited the palaces of 14th century Kings and served as the Headquarters of the Far East Command Centre and British Army Barracks.</p>"
         },
         {
             "name" : "Singapore Flyer",
             "lat" : "1.289332",
             "lng" : " 103.863152",
             "image" : "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Singapore_Singapore-Flyer-Ferris-wheel-01.jpg/800px-Singapore_Singapore-Flyer-Ferris-wheel-01.jpg",
-            "address" : "Singapore",
+            "address" : "Marina Bay, Singapore",
             "website" : "https://www.visitsingapore.com/see-do-singapore/recreation-leisure/viewpoints/singapore-flyer/#:~:text=Located%20in%20the%20heart%20of,stunning%20day%20and%20night%20scenes.",
-            "desc" : "<p>Located in the heart of downtown Marina Bay, the Singapore Flyer is Asia's largest giant observation wheel. More importantly, it is high on thrills for tourists and locals alike. Step into one of the 28 fully air-conditioned glass capsules, and be transported on a 30-minute journey of stunning day and night scenes.</p>",
-            "top" : "20",
-            "left" : "48"
+            "desc" : "<p>Located in the heart of downtown Marina Bay, the Singapore Flyer is Asia's largest giant observation wheel. More importantly, it is high on thrills for tourists and locals alike. Step into one of the 28 fully air-conditioned glass capsules, and be transported on a 30-minute journey of stunning day and night scenes.</p>"
         },
         {
             "name" : "Orchard Road",
@@ -95,9 +79,7 @@
             "image" : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Presenting..._the_real_ION_%288200217734%29.jpg/800px-Presenting..._the_real_ION_%288200217734%29.jpg",
             "address" : "Orchard, Singapore",
             "website" : "https://www.visitsingapore.com/see-do-singapore/places-to-see/orchard/",
-            "desc" : "<p>Orchard Road, often known colloquially as Orchard, is a major 2.5 km (1.6 mi)–long road in the Central Area of Singapore. A famous tourist attraction, it is an upscale shopping area of Singapore, with numerous internationally renowned department stores, restaurants and coffeehouses located in its vicinity.</p>",
-            "top" : "20",
-            "left" : "48"
+            "desc" : "<p>Orchard Road, often known colloquially as Orchard, is a major 2.5 km (1.6 mi)–long road in the Central Area of Singapore. A famous tourist attraction, it is an upscale shopping area of Singapore, with numerous internationally renowned department stores, restaurants and coffeehouses located in its vicinity.</p>"
         }
     ]
 }
