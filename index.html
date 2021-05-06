@@ -164,8 +164,7 @@
         function putMarkersOnMap( loc, i ) {
             let position = new google.maps.LatLng( loc.lat, loc.lng )
             let markerLabel = loc.name            
-            let markerLabelClicked = loc.name + "<p class='sub-label'>" + loc.address + "</p>"
-            
+                        
             let markerIcon = {
                 url: './img/geo-pin-sm.png',
                 scaledSize: new google.maps.Size( 41, 62 ),
@@ -189,28 +188,7 @@
             markers[i] = marker
             
             marker.addListener( 'click', function() {
-                // reset after click
-                for ( let i = 0; i < markers.length; i ++ ) {
-                    if ( markers[i].visible == false ) {
-                        markers[i].visible = true
-                        markers[i].labelClass = "label label-sm"
-                    }
-                }
-                // panning and zoom
-                map.panTo( position )
-                map.setZoom( 17 )
-                // set clicked marker to be invisible
-                markers[i].visible = false
-                markers[i].labelClass = "label-hidden"
-                // set new custom big marker as give more information
-                addCustomMarker( position, markerLabelClicked )
-                // set information to side map info
-                $( "#side-map-info" ).attr( "style", "display:block;" )
-                $( "#image" ).attr( "src", loc.image )
-                $( "#title" ).text( loc.name )
-                $( "#desc" ).html( loc.desc )
-                $( "#address" ).text( loc.address )
-                $( "#website" ).attr( "src", loc.website ).text( loc.website )
+                goToMarker(i)
             });
         }
         
@@ -238,17 +216,32 @@
             })
         }
         
-        function goToMarker( i ) {
-            let position = new google.maps.LatLng( dataLocation[ i ].lat, dataLocation[ i ].lng )
+        function goToMarker( index ) {
+            let position = new google.maps.LatLng( dataLocation[ index ].lat, dataLocation[ index ].lng )
+            let markerLabelClicked = dataLocation[ index ].name + "<p class='sub-label'>" + dataLocation[ index ].address + "</p>"
+
+            // reset after click
+            for ( let i = 0; i < markers.length; i ++ ) {
+                if ( markers[i].visible == false ) {
+                    markers[i].visible = true
+                    markers[i].labelClass = "label label-sm"
+                }
+            }
+            // pan and zoom to target
             map.panTo( position )
             map.setZoom( 17 )
-
+            // set clicked marker to be invisible
+            markers[ index ].visible = false
+            markers[ index ].labelClass = "label-hidden"
+            // set new custom big marker as give more information
+            addCustomMarker( position, markerLabelClicked )
+            // set to side map info
             $( "#side-map-info" ).attr( "style", "display:block;" )
-            $( "#image" ).attr( "src", dataLocation[i].image )
-            $( "#title" ).text(dataLocation[i].name )
-            $( "#desc" ).html(dataLocation[i].desc )
-            $( "#address" ).text( dataLocation[ i ].address )
-            $( "#website" ).attr( "src", dataLocation[ i ].website ).text( dataLocation[ i ].website )
+            $( "#image" ).attr( "src", dataLocation[ index ].image )
+            $( "#title" ).text(dataLocation[ index ].name )
+            $( "#desc" ).html(dataLocation[ index ].desc )
+            $( "#address" ).text( dataLocation[ index ].address )
+            $( "#website" ).attr( "src", dataLocation[ index ].website ).text( dataLocation[ index ].website )
         }
 
         function closeSideInfo() {
