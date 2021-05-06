@@ -17,7 +17,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-RXf+QSDCUQs5uwRKaDoXt55jygZZm2V++WUZduaU/Ui/9EGp3f/2KZVahFZBKGH0s774sd3HmrhUy+SgOFQLVQ==" crossorigin="anonymous"></script>
  
+    <!-- Import MarkerWithLabel -->
     <script src="https://unpkg.com/@googlemaps/markerwithlabel/dist/index.min.js"></script>
+
+    <!-- Call Google Map JS API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhxal3J4QPdqzueExcY1fVz25q9MByoH0"></script>
 </head>
 
 <body>
@@ -109,9 +113,14 @@
     </div>
     
     <script>
-        let dataLocation = new String()
+        let map
+        let marker
+        let dataLocation = []
+        let markers = []
 
         $( document ).ready( function() {
+            initMap()
+
             // i'm using python simpleHTTPServer to bypass CORS policy in browser
             // command : python -m http.server
             $.ajax({
@@ -129,7 +138,7 @@
                     }
 
                     locations.forEach(( element, index ) => {
-                        putMarkersOnMap( element )
+                        putMarkersOnMap( element, index )
                         navItems.eq(index).attr( "onclick", "goToMarker("+ index +")" )
                     })
                 },
@@ -146,48 +155,48 @@
                 center: center,
                 zoom: 15,
             }
-
+            
+            // init map
             map = new google.maps.Map( document.getElementById( "googleMap" ), mapProp )
-
         }
 
         // to put markers on map
-        let map
-        let marker
-        let markerOverlay
-
-        function putMarkersOnMap( loc ) {
+        function putMarkersOnMap( loc, i ) {
             let position = new google.maps.LatLng( loc.lat, loc.lng )
+            let markerLabel = loc.name            
+            let markerLabelClicked = loc.name + "<p class='sub-label'>" + loc.address + "</p>"
             
             let markerIcon = {
-                url: './img/geo-pin.png',
-                scaledSize: new google.maps.Size( 40, 50 ),
+                url: './img/geo-pin-sm.png',
+                scaledSize: new google.maps.Size( 41, 62 ),
                 origin: new google.maps.Point( 2, 0 ),
                 anchor: new google.maps.Point( 19, 50 ) // reposition custom marker in map to fit the origin marker
             }
-
-            let markerLabel = loc.name            
-            let markerLabelClicked = loc.name + "<br>" + loc.address
-
+            
             // from MarkerWithLabel documentation
             // http://www.abzz.co/v4/js/markerlabel/docs/examples.html
-
+            
             marker = new MarkerWithLabel({
                 position: position,
                 map: map,
                 draggable: false,
                 icon: markerIcon,
                 labelContent: markerLabel,
-                labelAnchor: new google.maps.Point( -4, -46 ),
+                labelAnchor: new google.maps.Point( -4, -43 ), // positioning label
                 labelClass: "label label-sm",
             })
 
+            markers[i] = marker
+            
             marker.addListener( 'click', function() {
                 map.panTo( position )
                 map.setZoom( 17 )
-                marker.labelVisible = false
+                // set clicked marker to be invisible
+                markers[i].visible = false
+                markers[i].labelClass = "label-hidden"
+                // set new custom big marker as give more information
                 addCustomMarker( position, map, markerLabelClicked )
-                
+                // set information to side map info
                 $( "#side-map-info" ).attr( "style", "display:block;" )
                 $( "#image" ).attr( "src", loc.image )
                 $( "#title" ).text( loc.name )
@@ -196,7 +205,7 @@
                 $( "#website" ).attr( "src", loc.website ).text( loc.website )
             });
         }
-
+        
         function addCustomMarker( pos, map, content ) {
             let newMarkerIcon = {
                 url: './img/geo-pin.png',
@@ -211,7 +220,7 @@
                 draggable: false,
                 icon: newMarkerIcon,
                 labelContent: content,
-                labelAnchor: new google.maps.Point( -4, -126 ),
+                labelAnchor: new google.maps.Point( -4, -134 ),
                 labelClass: "label label-lg"
             })
         }
@@ -261,8 +270,5 @@
             });
         }
     </script>
-
-    <!-- Call Google Map JS API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhxal3J4QPdqzueExcY1fVz25q9MByoH0&callback=initMap"></script>
 </body>
 </html>
