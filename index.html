@@ -113,10 +113,11 @@
     </div>
     
     <script>
-        let map
-        let marker
-        let dataLocation = []
-        let markers = []
+        let map, 
+            marker,
+            newMarker,
+            dataLocation = [],
+            markers = []
 
         $( document ).ready( function() {
             initMap()
@@ -134,7 +135,7 @@
 
                     // check if data is empty or not exist
                     if ( locations === undefined || locations.length == 0 ) {
-                        console.log("No data!")
+                        console.log( "No data!" )
                     }
 
                     locations.forEach(( element, index ) => {
@@ -142,7 +143,7 @@
                         navItems.eq(index).attr( "onclick", "goToMarker("+ index +")" )
                     })
                 },
-                error: function(xhr, status, error) {
+                error: function( xhr, status, error ) {
                     console.log( xhr.responseText )
                 },
                 dataType: "json" 
@@ -155,7 +156,6 @@
                 center: center,
                 zoom: 15,
             }
-            
             // init map
             map = new google.maps.Map( document.getElementById( "googleMap" ), mapProp )
         }
@@ -175,7 +175,7 @@
             
             // from MarkerWithLabel documentation
             // http://www.abzz.co/v4/js/markerlabel/docs/examples.html
-            
+
             marker = new MarkerWithLabel({
                 position: position,
                 map: map,
@@ -189,13 +189,21 @@
             markers[i] = marker
             
             marker.addListener( 'click', function() {
+                // reset after click
+                for ( let i = 0; i < markers.length; i ++ ) {
+                    if ( markers[i].visible == false ) {
+                        markers[i].visible = true
+                        markers[i].labelClass = "label label-sm"
+                    }
+                }
+                // panning and zoom
                 map.panTo( position )
                 map.setZoom( 17 )
                 // set clicked marker to be invisible
                 markers[i].visible = false
                 markers[i].labelClass = "label-hidden"
                 // set new custom big marker as give more information
-                addCustomMarker( position, map, markerLabelClicked )
+                addCustomMarker( position, markerLabelClicked )
                 // set information to side map info
                 $( "#side-map-info" ).attr( "style", "display:block;" )
                 $( "#image" ).attr( "src", loc.image )
@@ -206,7 +214,12 @@
             });
         }
         
-        function addCustomMarker( pos, map, content ) {
+        function addCustomMarker( pos, content ) {
+            if (newMarker != undefined) {
+                newMarker.visible = false
+                newMarker.labelClass = "label-hidden"
+            }
+
             let newMarkerIcon = {
                 url: './img/geo-pin.png',
                 scaledSize: new google.maps.Size( 120, 150 ),
@@ -214,7 +227,7 @@
                 anchor: new google.maps.Point( 60, 148 ) // reposition custom marker in map to fit the origin marker
             }
 
-            new MarkerWithLabel({
+            newMarker = new MarkerWithLabel({
                 position: pos,
                 map: map,
                 draggable: false,
@@ -256,7 +269,7 @@
 
                 // set active class to clicked element and remove others non-clicked active class
                 if ( activeElement.length > 0 ) {
-                    activeElement[0].className = activeElement[0].className.replace( " active", "" );
+                    activeElement[0].className = activeElement[0].className.replace( " active", "" )
                 }
                 
                 this.classList.toggle("active")
