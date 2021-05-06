@@ -1,0 +1,45 @@
+/* Custom icon from a sprite */
+.icon-md {
+    height: 48px;
+    width: 48px;
+    background: url('../img/sprite.svg') top left no-repeat;
+}
+
+.icon-sm {
+    height: 24px;
+    width: 24px;
+    margin: 0 5px 0 5px;
+    background: url('../img/sprite.svg') top left no-repeat;
+}
+
+.db-icon-1 {
+    background-position: 0 0;
+}
+
+.db-icon-2 {
+    background-position: 0 -54px;
+}
+
+.db-icon-3 {
+    background-position: 0 -107px;
+}
+
+.db-icon-4 {
+    background-position: 0 -163px;
+}
+
+.db-icon-5 {
+    background-position: 0 -215px;
+}
+
+.hr-icon-1 {
+    background-position: -54px 0px;
+}
+
+.hr-icon-2 {
+    background-position: -54px -24px;
+}
+
+.hr-icon-3 {
+    background-position: -54px -48px;
+}

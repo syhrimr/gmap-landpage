@@ -1,12 +1,14 @@
 <!doctype html>
 <html>
 <head>
-    <title>Singapore Map</title>
+    <title>Singapore Map - Tourist Attractions</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
 
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
+    <link rel="stylesheet" type="text/css" href="./css/icon.css" />
+    <link rel="stylesheet" type="text/css" href="./css/label.css" />
     
     <!-- Import jQuery library -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -30,23 +32,23 @@
             <!-- Dashboard Menu -->
             <div class="flex-col menu-bar">
                 <div class="card-box flex-col menu-item text-white ts-12 centered-content selected">
-                    <img class="menu-icon" src="./img/db-icon-1.png">
+                    <span class="icon-md db-icon-1"></span>
                     Browser
                 </div>
                 <div class="card-box flex-col menu-item text-secondary ts-12 centered-content">
-                    <img class="menu-icon" src="./img/db-icon-2.png">
+                    <span class="icon-md db-icon-2"></span>
                     Suggest<br>Attractions
                 </div>
                 <div class="card-box flex-col menu-item text-secondary ts-12 centered-content">
-                    <img class="menu-icon" src="./img/db-icon-3.png">
+                    <span class="icon-md db-icon-3"></span>
                     Videos
                 </div>
                 <div class="card-box flex-col menu-item text-secondary ts-12 centered-content">
-                    <img class="menu-icon" src="./img/db-icon-4.png">
+                    <span class="icon-md db-icon-4"></span>
                     Blog
                 </div>
                 <div class="card-box flex-col menu-item text-secondary ts-12 centered-content">
-                    <img class="menu-icon" src="./img/db-icon-5.png">
+                    <span class="icon-md db-icon-5"></span>
                     About
                 </div>
             </div>
@@ -81,9 +83,9 @@
                 <div class="flex-col header-bar">
                     <h4 class="title">TOP RATED TOURIST ATTRACTIONS IN SINGAPORE</h4>
                     <div class="icons flex-row top-50 end-0 translate-middle-y">
-                        <img src="img/icon-sprite_01.png">
-                        <img src="img/icon-sprite_02.png">
-                        <img src="img/icon-sprite_03.png">
+                        <span class="icon-sm hr-icon-1"></span>
+                        <span class="icon-sm hr-icon-2"></span>
+                        <span class="icon-sm hr-icon-3"></span>
                     </div>
                 </div>
                 <!-- Map Body -->
@@ -93,7 +95,7 @@
                         <div class="img-container">
                             <img id="image">
                             <div class="close position-absolute top-0 end-0">
-                                <i class="fas fa-times close fa-lg" onclick="closeSideInfo()"></i>
+                                <i class="fas fa-times close fa-lg" onclick="sideInfoClose()"></i>
                             </div>
                         </div>
                         <div class="title text-white" id="title">Merlion</div>
@@ -148,6 +150,8 @@
                 },
                 dataType: "json" 
             })
+
+            dropdownListOpener()
         })
 
         function initMap() {
@@ -167,8 +171,8 @@
                         
             let markerIcon = {
                 url: './img/geo-pin-sm.png',
-                scaledSize: new google.maps.Size( 41, 62 ),
-                origin: new google.maps.Point( 2, 0 ),
+                scaledSize: new google.maps.Size( 36, 57 ),
+                origin: new google.maps.Point( 0, 0 ),
                 anchor: new google.maps.Point( 19, 50 ) // reposition custom marker in map to fit the origin marker
             }
             
@@ -181,26 +185,30 @@
                 draggable: false,
                 icon: markerIcon,
                 labelContent: markerLabel,
-                labelAnchor: new google.maps.Point( -4, -43 ), // positioning label
+                labelAnchor: new google.maps.Point( -5, -45 ), // positioning label
                 labelClass: "label label-sm",
             })
 
             markers[i] = marker
             
             marker.addListener( 'click', function() {
-                goToMarker(i)
-            });
+                // close side map info
+                $( "#side-map-info" ).attr( "style", "display:none;" ) 
+                goToMarker( i )
+            })
         }
         
-        function addCustomMarker( pos, content ) {
+        function addCustomMarker( pos, index ) {
+            let markerLabelClicked = dataLocation[ index ].name + "<p class='sub-label'>" + dataLocation[ index ].address + "</p>"
+            // reset new marker
             if (newMarker != undefined) {
                 newMarker.visible = false
                 newMarker.labelClass = "label-hidden"
             }
 
             let newMarkerIcon = {
-                url: './img/geo-pin.png',
-                scaledSize: new google.maps.Size( 120, 150 ),
+                url: './img/geo-pin-lg.png',
+                scaledSize: new google.maps.Size( 100, 150 ),
                 origin: new google.maps.Point( 2, 0 ),
                 anchor: new google.maps.Point( 60, 148 ) // reposition custom marker in map to fit the origin marker
             }
@@ -210,16 +218,18 @@
                 map: map,
                 draggable: false,
                 icon: newMarkerIcon,
-                labelContent: content,
+                labelContent: markerLabelClicked,
                 labelAnchor: new google.maps.Point( -4, -134 ),
                 labelClass: "label label-lg"
+            })
+            
+            newMarker.addListener('click', function() {
+                sideMapInfoOpen( index )
             })
         }
         
         function goToMarker( index ) {
             let position = new google.maps.LatLng( dataLocation[ index ].lat, dataLocation[ index ].lng )
-            let markerLabelClicked = dataLocation[ index ].name + "<p class='sub-label'>" + dataLocation[ index ].address + "</p>"
-
             // reset after click
             for ( let i = 0; i < markers.length; i ++ ) {
                 if ( markers[i].visible == false ) {
@@ -227,6 +237,8 @@
                     markers[i].labelClass = "label label-sm"
                 }
             }
+            // close side map info
+            $( "#side-map-info" ).attr( "style", "display:none;" ) 
             // pan and zoom to target
             map.panTo( position )
             map.setZoom( 17 )
@@ -234,17 +246,27 @@
             markers[ index ].visible = false
             markers[ index ].labelClass = "label-hidden"
             // set new custom big marker as give more information
-            addCustomMarker( position, markerLabelClicked )
+            addCustomMarker( position, index )
+        }
+
+        // side map info open handler
+
+        function sideMapInfoOpen( index ) {
+            // change center when side map opened
+            map.panBy( 100, 0 )
             // set to side map info
             $( "#side-map-info" ).attr( "style", "display:block;" )
             $( "#image" ).attr( "src", dataLocation[ index ].image )
+            $( "#image" ).attr( "alt", dataLocation[ index ].name )
             $( "#title" ).text(dataLocation[ index ].name )
             $( "#desc" ).html(dataLocation[ index ].desc )
             $( "#address" ).text( dataLocation[ index ].address )
             $( "#website" ).attr( "src", dataLocation[ index ].website ).text( dataLocation[ index ].website )
         }
 
-        function closeSideInfo() {
+        function sideInfoClose() {
+            // normal map center
+            map.panBy( -100, 0 )
             $( "#side-map-info" ).attr( "style", "display:none;" )
         }
         
@@ -252,28 +274,29 @@
         // https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_active_element
         // https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav_dropdown
 
-        const dropdown = document.getElementsByClassName( "dropdown-btn" )
-        const sideNavItem = document.getElementsByClassName( "sidenav-item" )
+        function dropdownListOpener() {
 
-        for ( let i = 0; i < dropdown.length; i++ ) {
-            dropdown[i].addEventListener( "click", function() {
-                let dropdownContent = this.nextElementSibling
-                let activeElement = document.getElementsByClassName( "active" )
-
-                // set active class to clicked element and remove others non-clicked active class
-                if ( activeElement.length > 0 ) {
-                    activeElement[0].className = activeElement[0].className.replace( " active", "" )
-                }
-                
-                this.classList.toggle("active")
-                
-                // open and close list from dropdown
-                if ( dropdownContent.classList.contains("dropdown-content") && dropdownContent.style.display === "block" ) {
-                    dropdownContent.style.display = "none"
-                } else {
-                    dropdownContent.style.display = "block"
-                }
-            });
+            const dropdown = document.getElementsByClassName( "dropdown-btn" )
+            const sideNavItem = document.getElementsByClassName( "sidenav-item" )
+            
+            for ( let i = 0; i < dropdown.length; i++ ) {
+                dropdown[i].addEventListener( "click", function() {
+                    let dropdownContent = this.nextElementSibling
+                    let activeElement = document.getElementsByClassName( "active" )
+                    // remove others non-clicked active class
+                    if ( activeElement.length > 0 ) {
+                        activeElement[0].className = activeElement[0].className.replace( " active", "" )
+                    }
+                    // set active class to clicked element
+                    this.classList.toggle("active")
+                    // open and close list from dropdown
+                    if ( dropdownContent.classList.contains("dropdown-content") && dropdownContent.style.display === "block" ) {
+                        dropdownContent.style.display = "none"
+                    } else {
+                        dropdownContent.style.display = "block"
+                    }
+                });
+            }
         }
     </script>
 </body>

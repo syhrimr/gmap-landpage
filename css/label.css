@@ -1,0 +1,30 @@
+/* Label tag for marker label */
+.label {
+    color: white;
+    font-weight: bold;
+    text-align: left;
+    white-space: nowrap;
+    background-color: #282c37;
+}
+
+.label-sm {
+    height: 28px;
+    padding: 7px 15px 0 10px;
+    font-size: 12px;
+}
+
+.label-lg {
+    height: 72px;
+    padding: 14px 30px 0 10px;
+    font-size: 18px;
+    background-color: rgba(146,215,46,255);
+}
+
+.label-hidden {
+    display: none !important;
+}
+
+.sub-label {
+    font-size: 12px;
+    font-weight: lighter;
+}
